@@ -1,6 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Card({ name, url }: { name: string, url: string }) {
     const [pokemon, setPokemon] = useState<any | null>(null);
@@ -9,25 +10,25 @@ export default function Card({ name, url }: { name: string, url: string }) {
             try {
                 const res = await fetch(url);
                 const json = await res.json();
-                console.log(json);
                 setPokemon(json);
             } catch (e) {
                 console.error(e);
             }
         }
         fetchData();
-    }, [])
+    }, [url])
+
     if (pokemon == null) {
-        return <div>Loading...</div>
+        return (<></>)
     }
     return (
-        <div style={{ border: '1px solid black', padding: '10px', margin: '10px', borderRadius: '5px' }}>
+        <div className='border-2 shadow-xl p-4'>
             <div className='grid grid-col-1 justify-center'>
-                <img src={pokemon.sprites.front_default} alt={name} style={{ height: '256px', width: '256px' }} />
+                <Image className='h-auto' src={pokemon.sprites.front_default} alt={name} width={256} height={0} />
             </div>
             <div className="grid grid-col-1">
                 <span className='text-xl'>{name}</span>
-                <Link href={`/pokemon/${name}`} style={{ padding: '5px', backgroundColor: 'blue', color: 'white', border: 'none', borderRadius: '5px', textAlign: 'center' }}>
+                <Link className='border-1 bg-blue-500 text-center text-white py-1 rounded hover:bg-slate-800' href={`/pokemon/${name}`}>
                     Info
                 </Link>
             </div>
