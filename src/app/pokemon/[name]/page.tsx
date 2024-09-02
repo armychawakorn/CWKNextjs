@@ -16,10 +16,15 @@ export default function Pokemon({ params }: { params: { name: string } }) {
         }
         fetchData();
     }, [])
+    if (Pokemon == null) {
+        return <div>Loading...</div>
+    }
     return (
         <div className='grid grid-col-1 justify-center'>
-            <div style={{ border: '1px solid black', padding: '10px', margin: '10px', borderRadius: '5px' }}>
-                <img src={Pokemon?.sprites.front_default} alt={params.name} style={{ height: '256px', width: '256px' }} />
+            <div style={{ border: '1px solid black' }}>
+                <img src={Pokemon?.sprites.front_default} alt={params.name} style={{ height: 'auto', width: '256px' }} />
+                <hr style={{border: '1px solid black'}} />
+                <span className='text-3xl font-bold px-3'>{Pokemon.name}</span>
             </div>
         </div>
     )
